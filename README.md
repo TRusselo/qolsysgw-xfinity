@@ -18,15 +18,15 @@ Xfinity Gateway (`xfinitygw`) is an [AppDaemon][appdaemon] automation that serve
    - [Installing an MQTT Broker](#installing-an-mqtt-broker)
    - [Installing AppDaemon](#installing-appdaemon)
    - [Installing HACS (optional, recommended)](#installing-hacs-optional-recommended)
-   - [Installing Qolsys Gateway](#installing-qolsys-gateway)
+   - [Installing Xfinity Gateway](#installing-Xfinity-gateway)
       - [With HACS (recommended)](#with-hacs-recommended)
       - [Manually](#manually)
 - [Configuration](#configuration)
    - [Configuring the MQTT integration in Home Assistant](#configuring-the-mqtt-integration-in-home-assistant)
-   - [Configuring your Qolsys IQ Panel](#configuring-your-qolsys-iq-panel)
-   - [Configuring Qolsys Gateway](#configuring-qolsys-gateway)
+   - [Configuring your Xfinity IQ Panel](#configuring-your-Xfinity-iq-panel)
+   - [Configuring Xfinity Gateway](#configuring-Xfinity-gateway)
       - [Required configuration](#required-configuration)
-      - [Optional configuration related to the Qolsys Panel itself](#optional-configuration-related-to-the-qolsys-panel-itself)
+      - [Optional configuration related to the Xfinity Panel itself](#optional-configuration-related-to-the-Xfinity-panel-itself)
       - [Optional configuration related to the representation of the panel in Home Assistant](#optional-configuration-related-to-the-representation-of-the-panel-in-home-assistant)
       - [Optional configuration related to MQTT & AppDaemon](#optional-configuration-related-to-mqtt--appdaemon)
 - [Other documentation](#other-documentation)
@@ -35,39 +35,39 @@ Xfinity Gateway (`xfinitygw`) is an [AppDaemon][appdaemon] automation that serve
 
 ## How It Works
 
-Qolsys Gateway is an [async application][asyncio] and has a few parallel
+Xfinity Gateway is an [async application][asyncio] and has a few parallel
 workflows:
 
-1. The communication with the Qolsys Panel
+1. The communication with the Xfinity Panel
 
-   1. Qolsys Gateway connects to your Qolsys Panel using the configured
+   1. Xfinity Gateway connects to your Xfinity Panel using the configured
       information (hostname, token, port), thanks to a Control4 interface
 
-   2. As soon as the connection is established, Qolsys Gateway requests
+   2. As soon as the connection is established, Xfinity Gateway requests
       from the panel the information on the current state of the panel,
       its partitions and sensors
 
-   3. Qolsys Gateway listens for messages from the panel, and calls a
+   3. Xfinity Gateway listens for messages from the panel, and calls a
       callback method everytime a message can be parsed to an executable
       action; the callback will push that message in an MQTT thread _(that
       step is not mandatory but doing that loop allows to debug the
       application from Home Assistant by sending events directly in MQTT)_
 
    4. Every 4 minutes, a keep-alive message is sent to the connection,
-      in order to avoid the panel from disconnecting Qolsys Gateway
+      in order to avoid the panel from disconnecting Xfinity Gateway
 
 2. The communications with MQTT
 
-   1. Qolsys Gateway listens to an `event` topic, when a message is received,
+   1. Xfinity Gateway listens to an `event` topic, when a message is received,
       we update the state of the panel according to the event (it can be
       updating the sensors, the partitions or the panel itself). Messages in
-      that topic are the messages that come from the Qolsys Panel, and that
+      that topic are the messages that come from the Xfinity Panel, and that
       we intepret as change to the state of the panel. In general, with the
       update, we will trigger a few MQTT messages to be sent to update the
       status of the element at the source of the event in Home Assistant.
 
-   2. Qolsys Gateway also listens to a `control` topic, when a message is
-      received, we communicate the action to perform to the Qolsys Panel.
+   2. Xfinity Gateway also listens to a `control` topic, when a message is
+      received, we communicate the action to perform to the Xfinity Panel.
       Messages in that topic are coming from Home Assistant as reactions
       to service calls on the `alarm_control_panel` entities, or of manually
       configured actions. They can be used to arm or disarm the system,
@@ -83,7 +83,7 @@ workflows:
 
 ## Installation
 
-Installing Qolsys Gateway requires the following steps.
+Installing Xfinity Gateway requires the following steps.
 
 
 ### Installing Home Assistant
@@ -104,7 +104,7 @@ If you can, setup a username and password to secure your broker even more.
 
 ### Installing AppDaemon
 
-Qolsys Gateway is an AppDaemon automation, which means it depends on a
+Xfinity Gateway is an AppDaemon automation, which means it depends on a
 working and running version of AppDaemon, connected to your Home Assistant.
 You can find all the resources necessary in AppDaemon's documentation about
 how to [install AppDaemon][appdaemon-install] and how to
@@ -153,22 +153,22 @@ appdaemon:
 
 HACS is the Home Assistant Community Store and allows for community integrations and
 automations to be updated cleanly and easily from the Home Assistant web user interface.
-If it is simple to install Qolsys Gateway without HACS, keeping up to date requires
+If it is simple to install Xfinity Gateway without HACS, keeping up to date requires
 manual steps that HACS will handle for you: you will be notified of updates, and they
 can be installed by a click on a button.
 
 If you want to use HACS, you will have to follow [their documentation on how to install HACS][hacs-install].
 
 
-### Installing Qolsys Gateway
+### Installing Xfinity Gateway
 
-Installing Qolsys Gateway is pretty simple once all the applications above
+Installing Xfinity Gateway is pretty simple once all the applications above
 are setup. You can either follow the path using HACS (a bit more steps initially,
 easier on the longer run) or use the manual setup approach.
 
 #### With HACS (recommended)
 
-To install Qolsys Gateway with HACS, you will need to make sure that you enabled
+To install Xfinity Gateway with HACS, you will need to make sure that you enabled
 AppDaemon automations in HACS, as these are not enabled by default:
 
 1. Click on `Configuration` on the left menu bar in Home Assistant Web UI
@@ -182,28 +182,28 @@ AppDaemon automations in HACS, as these are not enabled by default:
    then require you to wait a few hours for HACS to be fully configured. In this case,
    you won't be able to proceed to the next steps until HACS is ready.
 
-Now, to install Qolsys Gateway with HACS, follow these steps:
+Now, to install Xfinity Gateway with HACS, follow these steps:
 
 1. Click on `HACS` on the left menu bar in Home Assistant Web UI
 2. Click on `Automations` in the right panel
 3. Click on `Explore & download repositories` in the bottom right corner
-4. Search for `qolsysgw`, and click on `Qolsys Gateway` in the list that appears
+4. Search for `Xfinitygw`, and click on `Xfinity Gateway` in the list that appears
 5. In the bottom right corner of the panel that appears, click on
    `Download this repository with HACS`
 6. A confirmation panel will appear, click on `Download`, and wait for HACS to
    proceed with the download
-6. Qolsys Gateway is now installed, and HACS will inform you when updates are available
+6. Xfinity Gateway is now installed, and HACS will inform you when updates are available
 
 
 #### Manually
 
-Installing Qolsys Gateway manually can be summarized by putting the content of the
-`apps/` directory of this repository (the `qolsysgw/` directory) into the `apps/`
+Installing Xfinity Gateway manually can be summarized by putting the content of the
+`apps/` directory of this repository (the `Xfinitygw/` directory) into the `apps/`
 directory of your AppDaemon installation.
 
 For instance, if your Home Assistant configuration directory is in `/hass/config/`,
 you most likely have AppDaemon setup in `/hass/config/appdaemon/`, and you can thus
-put `qolsysgw/` into `/hass/config/appdaemon/apps/`.
+put `Xfinitygw/` into `/hass/config/appdaemon/apps/`.
 
 
 ## Configuration
@@ -211,7 +211,7 @@ put `qolsysgw/` into `/hass/config/appdaemon/apps/`.
 ### Configuring the MQTT integration in Home Assistant
 
 The MQTT integration of Home Assistant needs to be configured with your
-MQTT broker in order for Qolsys Gateway to work. If you haven't setup the
+MQTT broker in order for Xfinity Gateway to work. If you haven't setup the
 MQTT integration yet, you can do so with the following steps:
 
 1. Click on `Configuration` on the left menu bar in Home Assistant Web UI
