@@ -3,17 +3,17 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [project]
-name = "qolsys"
-description = "Qolsys IQ Panel 2+ gateway API"
+name = "xfinity"
+description = "Xfinity Cable Box Control4 gateway API"
 dynamic = ["version"]
-dependencies = []
+dependencies = ["websockets"]
 requires-python = ">=3.8"
 authors = [
-  {name = "Raphaël Beamonte", email = "raphael.beamonte@gmail.com"},
+  {name = "TRusselo"}
 ]
 readme = "README.md"
 license = {file = "LICENSE"}
-keywords = ["qolsys", "iq panel", "gateway", "api"]
+keywords = ["xfinity", "cable box", "control4", "gateway", "api"]
 classifiers = [
   # How mature is this project? Common values are
   #   3 - Alpha
@@ -32,11 +32,11 @@ classifiers = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/xaf/qolsysgw"
-Documentation = "https://github.com/xaf/qolsysgw"
-Repository = "https://github.com/xaf/qolsysgw.git"
-Issues = "https://github.com/xaf/qolsysgw/issues"
-Changelog = "https://github.com/xaf/qolsysgw/commits/main/"
+Homepage = "https://github.com/TRusselo/xfinitygw"
+Documentation = "https://github.com/TRusselo/xfinitygw"
+Repository = "https://github.com/TRusselo/xfinitygw.git"
+Issues = "https://github.com/TRusselo/xfinitygw/issues"
+Changelog = "https://github.com/TRusselo/xfinitygw/commits/main/"
 
 [tool.hatch.version]
 path = "build_version.py"
@@ -45,11 +45,11 @@ path = "build_version.py"
 skip-excluded-dirs = true
 
 [tool.hatch.build.targets.sdist]
-packages = ["apps/qolsysgw/qolsys"]
-only-include = ["apps/qolsysgw/qolsys"]
-sources = ["apps/qolsysgw"]
+packages = ["apps/xfinitygw/xfinity"]
+only-include = ["apps/xfinitygw/xfinity"]
+sources = ["apps/xfinitygw"]
 
 [tool.hatch.build.targets.wheel]
-packages = ["apps/qolsysgw/qolsys"]
-only-include = ["apps/qolsysgw/qolsys"]
-sources = ["apps/qolsysgw"]
+packages = ["apps/xfinitygw/xfinity"]
+only-include = ["apps/xfinitygw/xfinity"]
+sources = ["apps/xfinitygw"]
